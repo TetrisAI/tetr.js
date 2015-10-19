@@ -23,6 +23,7 @@ function ObjectClone(obj) {
  */
 var cellSize;
 var column;
+var gameWidth = 10;
 
 /**
  * Get html elements. 
@@ -173,12 +174,21 @@ var OffsetARS = [
   [[ 0,+1],[-1, 0],[ 0, 0],[ 0, 0]],
   [[ 0,+1],[ 0, 0],[ 0, 0],[ 0, 0]],
   [[ 0,+1],[ 0, 0],[ 0, 0],[+1, 0]]];
+var OffsetHuopin = [
+  [[ 0, 0],[ 0, 0],[ 0,-1],[+1, 0]],
+  [[ 0,+1],[ 0, 0],[ 0, 0],[ 0, 0]],
+  [[ 0,+1],[ 0, 0],[ 0, 0],[ 0, 0]],
+  [[ 0,+1],[ 0,+1],[ 0,+1],[ 0,+1]],
+  [[ 0,+1],[ 0, 0],[ 0, 0],[+1, 0]],
+  [[ 0,+1],[ 0, 0],[ 0, 0],[ 0, 0]],
+  [[ 0,+1],[ 0, 0],[ 0, 0],[+1, 0]]];
 
 //x, y, r
 var InitInfoSRS = [[0, 0, 0],[ 0, 0, 0],[ 0, 0, 0],[ 0, 0, 0],[ 0, 0, 0],[ 0, 0, 0],[ 0, 0, 0]];
 var InitInfoARS = [[0, 0, 0],[ 0,-1, 2],[ 0,-1, 2],[ 0, 0, 0],[ 0, 0, 0],[ 0,-1, 2],[ 0, 0, 0]];
+var InitInfoHuopin = [[0, 0, 0],[ 0,-1, 1],[ 0,-1, 3],[ 0, 0, 0],[ 0, 0, 0],[ 0,-1, 2],[ 0, 0, 0]];
 
-//SRS, C2, ARS
+//SRS, C2, ARS, Huopin
 var RotSys = [
   {
     initinfo: InitInfoSRS,
@@ -191,49 +201,53 @@ var RotSys = [
   {
     initinfo: InitInfoARS,
     offset: OffsetARS
+  },
+  {
+    initinfo: InitInfoHuopin,
+    offset: OffsetHuopin
   }
 ]
 
 // Define shapes and spawns.
 var PieceI = {
   index: 0,
-  x: 3,
+  x: (gameWidth - 4) / 2,
   y: 0,
   tetro: TetroI
 };
 var PieceJ = {
   index: 1,
-  x: 3,
+  x: (gameWidth - 4) / 2,
   y: 0,
   tetro: TetroJ
 };
 var PieceL = {
   index: 2,
-  x: 3,
+  x: (gameWidth - 4) / 2,
   y: 0,
   tetro: TetroL
 };
 var PieceO = {
   index: 3,
-  x: 3,
+  x: (gameWidth - 4) / 2,
   y: 0,
   tetro: TetroO
 };
 var PieceS = {
   index: 4,
-  x: 3,
+  x: (gameWidth - 4) / 2,
   y: 0,
   tetro: TetroS
 };
 var PieceT = {
   index: 5,
-  x: 3,
+  x: (gameWidth - 4) / 2,
   y: 0,
   tetro: TetroT
 };
 var PieceZ = {
   index: 6,
-  x: 3,
+  x: (gameWidth - 4) / 2,
   y: 0,
   tetro: TetroZ
 };
@@ -361,7 +375,7 @@ var setting = {
     return array;
   })(),
   'Lock Delay': range(0,101),
-  RotSys: ['Super', 'C2', 'ArikaEasy'],
+  RotSys: ['Super', 'C2', 'ArikaEasy', 'Huopin'],
   Size: ['Auto', 'Small', 'Medium', 'Large'],
   Sound: ['Off', 'On'],
   Volume: range(0, 101),
@@ -381,14 +395,14 @@ var arrRowGen = {
   'simplemessy':
   function(arr,ratio) {
     var hashole = false;
-    for(var x = 0; x < 10; x++){
+    for(var x = 0; x < gameWidth; x++){
       if(rng.next()>=ratio) {
         hashole=true;
         arr[x] = 0;
       }
     }
     if(hashole===false){
-      arr[~~(rng.next()*10)] = 0;
+      arr[~~(rng.next()*gameWidth)] = 0;
     }
   },
 };
@@ -567,7 +581,7 @@ function resize() {
   if (settings.Size === 1 && screenHeight > 602) cellSize = 15;
   else if (settings.Size === 2 && screenHeight > 602) cellSize = 30;
   else if (settings.Size === 3 && screenHeight > 902) cellSize = 45;
-  else cellSize = Math.max(~~(screenHeight / 20), 10);
+  else cellSize = Math.max(~~(screenHeight / 20), gameWidth);
 
   var pad = (window.innerHeight - (cellSize * 20 + 2));
   var padFinal = Math.min(pad/2, padH);
@@ -586,7 +600,7 @@ function resize() {
   // Size elements
   a.style.padding = '0 0.5rem ' + ~~(cellSize / 2) + 'px';
 
-  stackCanvas.width = activeCanvas.width = bgStackCanvas.width = cellSize * 10;
+  stackCanvas.width = activeCanvas.width = bgStackCanvas.width = cellSize * gameWidth;
   stackCanvas.height = activeCanvas.height = bgStackCanvas.height = cellSize * 20;
   b.style.width = stackCanvas.width + 'px';
   b.style.height = stackCanvas.height + 'px';
@@ -839,6 +853,12 @@ function init(gt, params) {
     replay.gameparams = gameparams;
     replay.settings = settings;
   }
+  if (settings.RotSys === 3) {
+	gameWidth = 12;
+  }
+  else {
+	gameWidth = 10;
+  }
 
   if(gametype === void 0) //sometimes happens.....
     gametype = 0;
@@ -863,7 +883,7 @@ function init(gt, params) {
   toGreyRow = 21;
   frame = 0;
   lastPos = 'reset';
-  stack.new(10, 22);
+  stack.new(gameWidth, 22);
   hold.piece = void 0;
   if (settings.Gravity === 0) gravity = gravityUnit;
 
@@ -902,7 +922,7 @@ function init(gt, params) {
     statsLines.innerHTML = 10;
     var randomNums = [];
     for (var y = 21; y > 11; y--) {
-      for (var x = 0; x < 10; x++) {
+      for (var x = 0; x < gameWidth; x++) {
         if ((x+y)&1)
           stack.grid[x][y] = 8;
       }
@@ -1433,7 +1453,7 @@ function update() {
           idxRainbow = arrRainbow.length - 1;
         }
         colorUsed = arrRainbow[idxRainbow];
-        for(var x=0; x<10; x+=(flagAll===1?1:9)) {
+        for(var x=0; x<gameWidth; x+=(flagAll===1?1:11)) {
           if(colorUsed===-1) {
             arrRow[x]=~~(rng.next()*8+1);
           } else {
@@ -1619,7 +1639,7 @@ function gameLoop() {
         if (toGreyRow === 21)
           clear(activeCtx);
         if (frame % 2) {
-          for (var x = 0; x < 10; x++) {
+          for (var x = 0; x < gameWidth; x++) {
              /* farter */ //WTF gamestate-1
             if (stack.grid[x][toGreyRow])
               stack.grid[x][toGreyRow] =

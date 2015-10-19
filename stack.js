@@ -63,12 +63,12 @@ Stack.prototype.addPiece = function(tetro) {
   range = range.sort(function(a,b){return a-b});
   for (var row = range[0], len = row + range.length; row < len; row++) {
     var count = 0;
-    for (var x = 0; x < 10; x++) {
+    for (var x = 0; x < gameWidth; x++) {
       if (this.grid[x][row]) count++;
     }
     // Clear the line. This basically just moves down the stack.
     // TODO Ponder during the day and see if there is a more elegant solution.
-    if (count === 10) {
+    if (count === gameWidth) {
       lineClear++; // NOTE stats
       if (gametype === 4) { // dig race
         if (digLines.indexOf(row) !== -1) {
@@ -76,7 +76,7 @@ Stack.prototype.addPiece = function(tetro) {
         }
       }
       for (var y = row; y >= -1; y--) {
-        for (var x = 0; x < 10; x++) {
+        for (var x = 0; x < gameWidth; x++) {
           this.grid[x][y] = this.grid[x][y - 1];
         }
       }
@@ -119,11 +119,11 @@ Stack.prototype.addPiece = function(tetro) {
   }
   lines += lineClear;
   if (gametype === 1)
-    level = ~~(lines / 10);
+    level = ~~(lines / gameWidth);
   score = score.add(scoreAdd.mul(bigInt(16).pow(allclear)));
   
   var pc = true;
-  for (var x = 0; x < 10; x++)
+  for (var x = 0; x < gameWidth; x++)
     for (var y = 0; y < 22; y++)
       if (this.grid[x][y])
         pc = false;
@@ -148,7 +148,7 @@ Stack.prototype.addPiece = function(tetro) {
  * Raise a garbage line. farter
  */
 Stack.prototype.rowRise = function(arrRow, objPiece) {
-  for(var x = 0; x < 10; x++) {
+  for(var x = 0; x < gameWidth; x++) {
     for(var y = 0; y < this.grid[x].length - 1; y++) {
       this.grid[x][y]=this.grid[x][y+1];
     }

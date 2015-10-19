@@ -204,7 +204,8 @@ Piece.prototype.checkShift = function() {
   if (flags.moveLeft3 & keysDown && !(lastKeys & flags.moveLeft3)) {
     this.multiShift(-1, 3);
     this.finesse++;
-  } else if (flags.moveRight3 & keysDown && !(lastKeys & flags.moveRight3)) {
+  }
+  if (flags.moveRight3 & keysDown && !(lastKeys & flags.moveRight3)) {
     this.multiShift(1, 3);
     this.finesse++;
   }
@@ -298,7 +299,7 @@ Piece.prototype.moveValid = function(cx, cy, tetro) {
   for (var x = 0; x < tetro.length; x++) {
     for (var y = 0; y < tetro[x].length; y++) {
       if (tetro[x][y] &&
-      ((cx + x < 0 || cx + x >= 10 || cy + y >= 22) ||
+      ((cx + x < 0 || cx + x >= gameWidth || cy + y >= 22) ||
       stack.grid[cx + x][cy + y])) {
         return false;
       }
