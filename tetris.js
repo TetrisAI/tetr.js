@@ -24,6 +24,7 @@ function ObjectClone(obj) {
 var cellSize;
 var column;
 var gameWidth = 10;
+var rightPreview = true;
 
 /**
  * Get html elements. 
@@ -858,6 +859,28 @@ function init(gt, params) {
   }
   else {
 	gameWidth = 10;
+  }
+  if (rightPreview && settings.RotSys === 3) {
+	var pv = document.getElementById('c');
+	var hv = document.getElementById('d');
+	var left = document.getElementById('left_div');
+	var right = document.getElementById('right_div');
+	left.removeChild(hv);
+	right.removeChild(pv);
+	left.appendChild(pv);
+	right.appendChild(hv);
+	rightPreview = false;
+  }
+  else if (!rightPreview && settings.RotSys !== 3) {
+	var pv = document.getElementById('c');
+	var hv = document.getElementById('d');
+	var left = document.getElementById('left_div');
+	var right = document.getElementById('right_div');
+	left.removeChild(pv);
+	right.removeChild(hv);
+	left.appendChild(hv);
+	right.appendChild(pv);
+	rightPreview = true;
   }
 
   if(gametype === void 0) //sometimes happens.....
@@ -1699,9 +1722,9 @@ function trysubmitscore() {
     obj.score=score.toString();
     obj.name=playername;
     
-    submitscore(obj);
+    //submitscore(obj);
   }else{
-    submitscore(obj);
+    //submitscore(obj);
   }
 }
 
