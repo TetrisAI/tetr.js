@@ -4,12 +4,9 @@ function Hold() {
 Hold.prototype.draw = function() {
   clear(holdCtx);
   var initInfo = RotSys[settings.RotSys].initinfo[this.piece];
-  if (this.piece === 0 || this.piece === 3) {
-    draw(pieces[this.piece].tetro[initInfo[2]], pieces[this.piece].x - 3,
-         2 + pieces[this.piece].y + initInfo[1], holdCtx);
-  } else {
-    draw(pieces[this.piece].tetro[initInfo[2]], pieces[this.piece].x - 2.5,
-         2 + pieces[this.piece].y + initInfo[1], holdCtx);
-  }
+  var offset = getOffset(0, this.piece);
+  offset.x += pieces[this.piece].x - (gameWidth - 4) / 2 + 0.5;
+  offset.y += pieces[this.piece].y + 2 + initInfo[1];
+  draw(pieces[this.piece].tetro[initInfo[2]], offset.x, offset.y, holdCtx, undefined, undefined, true);
 }
 var hold = new Hold();

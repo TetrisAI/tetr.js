@@ -41,35 +41,14 @@ Preview.prototype.gen = function() {
  * Draws the piece preview.
  */
 Preview.prototype.draw = function() {
-    clear(previewCtx);
-    for (var i = 0, mi = settings.RotSys == 3 ? 4 : 6; i < mi; i++) {
+  clear(previewCtx);
+  for (var i = 0, mi = settings.RotSys == 3 ? 4 : 6; i < mi; i++) {
     var initInfo = RotSys[settings.RotSys].initinfo[this.grabBag[i]];
-	var x = pieces[this.grabBag[i]].x - (gameWidth - 4) / 2 + 0.5;
-	var y = pieces[this.grabBag[i]].y + 2 + initInfo[1] + i * 3;
-	if (settings.RotSys == 3) {
-		if (this.grabBag[i] === 4 || this.grabBag[i] === 5 || this.grabBag[i] === 6) {
-			x += 1
-		}
-		else if (this.grabBag[i] === 2) {
-			x += 1.5
-		}
-		else {
-			x += 0.5
-		}
-		y += i * 0.5;
-		if (this.grabBag[i] !== 1 && this.grabBag[i] !== 2) {
-			y += 1.5
-		}
-		else {
-			y += 2
-		}
-	}
-    else {
-		if (this.grabBag[i] === 0 || this.grabBag[i] === 3) {
-			x -= 0.5
-		}
-	}
-      draw(pieces[this.grabBag[i]].tetro[initInfo[2]], x, y, previewCtx);
+	var offset = getOffset(i, this.grabBag[i]);
+	offset.x += pieces[this.grabBag[i]].x - (gameWidth - 4) / 2 + 0.5;
+	offset.y += pieces[this.grabBag[i]].y + 2 + initInfo[1] + i * 3;
+    draw(pieces[this.grabBag[i]].tetro[initInfo[2]], offset.x, offset.y,
+       previewCtx, undefined, undefined, true);
   }
 }
 var preview = new Preview();

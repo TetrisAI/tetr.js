@@ -209,6 +209,38 @@ var RotSys = [
   }
 ]
 
+//TODO to table
+function getOffset(i, grabBag) {
+  var x = 0, y = 0;
+  if (settings.RotSys == 3) {
+    if (grabBag === 4 || grabBag === 5 || grabBag === 6) {
+      x += 1
+    }
+    else if (grabBag === 2) {
+      x += 1.5
+    }
+    else {
+      x += 0.5
+    }
+    y += 0.5 + i * 0.5;
+    if (grabBag === 1 || grabBag === 2) {
+      y += 0.5
+    }
+    else if (grabBag === 0) {
+      y -= 0.5;
+    }
+  }
+  else {
+    if (grabBag === 0 || grabBag === 3) {
+      x -= 0.5
+    }
+    if (grabBag === 0) {
+      y -= 0.5;
+    }
+  }
+  return {x: x, y: y};
+}
+
 // Define shapes and spawns.
 var PieceI = {
   index: 0,
@@ -607,7 +639,7 @@ function resize() {
   b.style.height = stackCanvas.height + 'px';
 
   holdCanvas.width = cellSize * 4;
-  holdCanvas.height = cellSize * 2;
+  holdCanvas.height = cellSize * 3;
   a.style.width = holdCanvas.width + 'px';
   a.style.height = holdCanvas.height + 'px';
 
@@ -1101,10 +1133,15 @@ function bg(ctx) {
 /**
  * Draws a pre-rendered mino.
  */
-function drawCell(x, y, color, ctx, darkness) {
-  x = x * cellSize;
-  x = ~~x;
-  y = ~~y * cellSize - 2 * cellSize;
+function drawCell(x, y, color, ctx, darkness, fix) {
+  if (fix === void 0) {
+    x = ~~x * cellSize;
+    y = ~~y * cellSize - 2 * cellSize;
+  }
+  else {
+    x = ~~(x * cellSize);
+    y = ~~(y * cellSize) - 2 * cellSize;
+  }
   ctx.drawImage(spriteCanvas, color * cellSize, 0, cellSize, cellSize, x, y, cellSize, cellSize);
   if (darkness !== void 0) {
     //ctx.globalCompositeOperation = 'source-atop';
@@ -1258,11 +1295,11 @@ function clear(ctx) {
 /**
  * Draws a 2d array of minos.
  */
-function draw(tetro, cx, cy, ctx, color, darkness) {
+function draw(tetro, cx, cy, ctx, color, darkness, fix) {
   for (var x = 0, len = tetro.length; x < len; x++) {
     for (var y = 0, wid = tetro[x].length; y < wid; y++) {
       if (tetro[x][y]) {
-        drawCell(x + cx, y + cy, color !== void 0 ? color : tetro[x][y], ctx, darkness);
+        drawCell(x + cx, y + cy, color !== void 0 ? color : tetro[x][y], ctx, darkness, fix);
       }
     }
   }
