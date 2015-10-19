@@ -7,6 +7,6 @@ Hold.prototype.draw = function() {
   var offset = getOffset(0, this.piece);
   offset.x += pieces[this.piece].x - (gameWidth - 4) / 2 + 0.5;
   offset.y += pieces[this.piece].y + 2 + initInfo[1];
-  draw(pieces[this.piece].tetro[initInfo[2]], offset.x, offset.y, holdCtx, undefined, undefined, true);
+  draw(pieces[this.piece].tetro[initInfo[2]], offset.x, offset.y, holdCtx, void 0, void 0, true);
 }
 var hold = new Hold();

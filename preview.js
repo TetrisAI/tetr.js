@@ -42,13 +42,13 @@ Preview.prototype.gen = function() {
  */
 Preview.prototype.draw = function() {
   clear(previewCtx);
-  for (var i = 0, mi = settings.RotSys == 3 ? 4 : 6; i < mi; i++) {
+  for (var i = 0, mi = settings.RotSys === 3 ? 4 : 6; i < mi; i++) {
     var initInfo = RotSys[settings.RotSys].initinfo[this.grabBag[i]];
 	var offset = getOffset(i, this.grabBag[i]);
 	offset.x += pieces[this.grabBag[i]].x - (gameWidth - 4) / 2 + 0.5;
 	offset.y += pieces[this.grabBag[i]].y + 2 + initInfo[1] + i * 3;
     draw(pieces[this.grabBag[i]].tetro[initInfo[2]], offset.x, offset.y,
-       previewCtx, undefined, undefined, true);
+       previewCtx, settings.RotSys === 3 && i >= 1 ? 8 : void 0, void 0, true);
   }
 }
 var preview = new Preview();
