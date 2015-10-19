@@ -41,8 +41,8 @@ Preview.prototype.gen = function() {
  * Draws the piece preview.
  */
 Preview.prototype.draw = function() {
-  clear(previewCtx);
-  for (var i = 0; i < 6; i++) {
+    clear(previewCtx);
+    for (var i = 0; i < 6; i++) {
     var initInfo = RotSys[settings.RotSys].initinfo[this.grabBag[i]];
 	var x = pieces[this.grabBag[i]].x - (gameWidth - 4) / 2 + 0.5;
 	var y = pieces[this.grabBag[i]].y + 2 + initInfo[1] + i * 3;
@@ -57,10 +57,10 @@ Preview.prototype.draw = function() {
 			x += 0.5
 		}
 		if (this.grabBag[i] !== 1 && this.grabBag[i] !== 2) {
-			y += 0.5
+			y += 1
 		}
 		else {
-			y += 1
+			y += 1.5
 		}
 	}
     else {
