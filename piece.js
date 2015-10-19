@@ -123,7 +123,7 @@ Piece.prototype.rotate = function(direction) {
   } else {
     var kickIndex = [ 1, -1 ,2].indexOf(direction); // kickDataDirectionIndex
     var kickList;
-    if (settings.RotSys === 1)
+    if (settings.RotSys === 1 || settings.RotSys === 3)
       kickList = WKTableCultris;
     else
       kickList = WKTableSRS[this.index][kickIndex][curPos];
