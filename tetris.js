@@ -186,7 +186,7 @@ var OffsetHuopin = [
 //x, y, r
 var InitInfoSRS = [[0, 0, 0],[ 0, 0, 0],[ 0, 0, 0],[ 0, 0, 0],[ 0, 0, 0],[ 0, 0, 0],[ 0, 0, 0]];
 var InitInfoARS = [[0, 0, 0],[ 0,-1, 2],[ 0,-1, 2],[ 0, 0, 0],[ 0, 0, 0],[ 0,-1, 2],[ 0, 0, 0]];
-var InitInfoHuopin = [[0, 0, 0],[ 0,-1, 1],[ 0,-1, 3],[ 0, 0, 0],[ 0, 0, 0],[ 0,-1, 2],[ 0, 0, 0]];
+var InitInfoHuopin = [[1, 0, 0],[ 1,-1, 1],[ 1,-1, 3],[ 1, 0, 0],[ 1, 0, 0],[ 1,-1, 2],[ 1, 0, 0]];
 
 //SRS, C2, ARS, Huopin
 var RotSys = [
@@ -211,43 +211,43 @@ var RotSys = [
 // Define shapes and spawns.
 var PieceI = {
   index: 0,
-  x: (gameWidth - 4) / 2,
+  x: 3,
   y: 0,
   tetro: TetroI
 };
 var PieceJ = {
   index: 1,
-  x: (gameWidth - 4) / 2,
+  x: 3,
   y: 0,
   tetro: TetroJ
 };
 var PieceL = {
   index: 2,
-  x: (gameWidth - 4) / 2,
+  x: 3,
   y: 0,
   tetro: TetroL
 };
 var PieceO = {
   index: 3,
-  x: (gameWidth - 4) / 2,
+  x: 3,
   y: 0,
   tetro: TetroO
 };
 var PieceS = {
   index: 4,
-  x: (gameWidth - 4) / 2,
+  x: 3,
   y: 0,
   tetro: TetroS
 };
 var PieceT = {
   index: 5,
-  x: (gameWidth - 4) / 2,
+  x: 3,
   y: 0,
   tetro: TetroT
 };
 var PieceZ = {
   index: 6,
-  x: (gameWidth - 4) / 2,
+  x: 3,
   y: 0,
   tetro: TetroZ
 };
